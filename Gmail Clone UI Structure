@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox - Gmail Clone</title>
+    <meta name="description" content="A vanilla JavaScript Gmail clone for demonstration purposes.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+
+    <!-- Main application container -->
+    <div id="app" class="app-container">
+
+        <!-- Header: Search and Branding -->
+        <header id="app-header" class="app-header">
+            <div class="header-left">
+                <button id="menu-toggle" class="icon-button" aria-label="Toggle menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path></svg>
+                </button>
+                <h1 class="logo">Gmail Clone</h1>
+            </div>
+            <div class="search-container" role="search">
+                <input type="search" id="search-input" class="search-input" placeholder="Search mail" aria-label="Search mail">
+            </div>
+        </header>
+
+        <!-- Sidebar: Navigation and Labels -->
+        <nav id="sidebar" class="sidebar" aria-label="Mail folders">
+            <div class="sidebar-header">
+                <button id="compose-btn" class="button-primary compose-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20" style="margin-right: 8px;"><path d="M16.1 2.9C15.7 2.5 15.1 2.5 14.7 2.9L3.7 13.9C3.5 14.1 3.4 14.4 3.4 14.7L2.1 19.8C2 20.2 2.2 20.6 2.6 20.8C2.8 20.9 3 20.9 3.2 20.9L8.3 19.6C8.6 19.5 8.9 19.4 9.1 19.2L20.1 8.2C20.5 7.8 20.5 7.2 20.1 6.8L16.1 2.9ZM8.4 17.8L4.3 18.7L5.2 14.6L14 5.8L17.2 9L8.4 17.8ZM18.6 7.6L15.4 4.4L17.5 2.3L20.7 5.5L18.6 7.6Z"></path></svg>
+                    Compose
+                </button>
+            </div>
+            <ul id="folders-list" class="folders-list" role="list">
+                <!-- Dynamically generated folders -->
+            </ul>
+            <div class="labels-section">
+                <h2 class="labels-title">Labels</h2>
+                <ul id="labels-list" class="labels-list" role="list">
+                    <!-- Dynamically generated labels -->
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="main-content">
+            <!-- Message List View -->
+            <div id="message-list-view" class="message-list-view">
+                <div id="message-list-toolbar" class="message-list-toolbar">
+                    <input type="checkbox" id="select-all-checkbox" aria-label="Select all messages">
+                    <div id="bulk-actions" class="bulk-actions hidden">
+                        <button class="icon-button" aria-label="Archive" data-action="archive">
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4C2.9 3 2 3.9 2 5V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V5C22 3.9 21.1 3 20 3ZM19 19H5V8H19V19ZM18 6H6V5H18V6ZM11 12.5H13V15.5H11V12.5Z"></path></svg>
+                        </button>
+                        <button class="icon-button" aria-label="Move to trash" data-action="trash">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z"></path></svg>
+                        </button>
+                         <button class="icon-button" aria-label="Mark as read" data-action="mark_read">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.92 11.6C21.74 11.24 20.36 9 16.5 9C14.28 9 12.5 10.21 11.96 11.05C11.96 11.05 11.95 11.05 11.95 11.05C10.86 12.24 9.17 14 6.5 14C3.25 14 1 12.13 1 12.13C0.63 11.88 0.16 12.2 0.34 12.61C1.22 14.38 3.5 16.5 6.5 16.5C8.72 16.5 10.5 15.29 11.04 14.45C11.04 14.45 11.05 14.45 11.05 14.45C12.14 13.26 13.83 11.5 16.5 11.5C19.75 11.5 22 13.37 22 13.37C22.37 13.62 22.84 13.3 22.66 12.89L21.92 11.6Z"></path></svg>
+                        </button>
+                        <button class="icon-button" aria-label="Mark as unread" data-action="mark_unread">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 19.5C15.19 19.5 18.23 18.22 20.57 15.84C21.53 14.86 22 13.56 22 12.18C22 12.11 21.91 12.06 21.85 12.11C20.69 13.66 18.11 15.5 14.5 15.5C12.28 15.5 10.5 14.29 9.96 13.45C9.96 13.45 9.95 13.45 9.95 13.45C8.86 12.26 7.17 10.5 4.5 10.5C2.14 10.5 0.5 11.4 0.5 11.4C0.13 11.65 -0.34 11.33 -0.16 10.92C0.72 9.15 3 7 6 7C8.22 7 10 8.21 10.54 9.05C10.55 9.05 10.55 9.05 10.55 9.05C11.64 10.24 13.33 12 16 12C18.75 12 21 10.13 21 10.13C21.37 9.88 21.84 10.2 21.66 10.61L20.92 11.84C20.73 12.2 20.27 12.38 19.93 12.19C19.93 12.19 18.26 11.23 16 11.23C13.78 11.23 12 12.44 11.46 13.28C11.45 13.28 11.45 13.28 11.45 13.28C10.36 14.47 8.67 16.23 6 16.23C3.64 16.23 2 15.33 2 15.33V15.35C2.65 16.54 4.14 17.73 6 17.73C8.67 17.73 10.36 15.97 11.45 14.78C11.45 14.78 11.45 14.78 11.46 14.78C12 15.62 13.78 16.83 16 16.83C18.11 16.83 20.69 14.99 21.85 13.44C21.91 13.49 22 13.54 22 13.61C22 14.99 21.53 16.29 20.57 17.27C18.23 19.65 15.19 20.93 12 20.93C8.81 20.93 5.77 19.65 3.43 17.27C0.5 14.28 0.5 9.22 3.43 6.23C5.77 3.85 8.81 2.57 12 2.57C15.19 2.57 18.23 3.85 20.57 6.23L19.16 7.64C17.21 5.66 14.71 4.57 12 4.57C9.29 4.57 6.79 5.66 4.84 7.64C2.32 10.19 2.32 14.31 4.84 16.86C6.79 18.84 9.29 19.93 12 19.93V19.5Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <ul id="message-list" class="message-list" role="list">
+                    <!-- Dynamically generated message list -->
+                </ul>
+                <div id="empty-message-list" class="empty-view hidden">
+                    <p>No messages here!</p>
+                </div>
+            </div>
+
+            <!-- Thread Detail View -->
+            <div id="thread-view" class="thread-view hidden">
+                <div id="thread-view-toolbar" class="thread-view-toolbar">
+                     <button id="thread-back-btn" class="icon-button" aria-label="Back to message list">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z"></path></svg>
+                    </button>
+                </div>
+                <div id="thread-content" class="thread-content">
+                    <!-- Dynamically generated thread content -->
+                </div>
+                 <div id="thread-reply-container" class="thread-reply-container">
+                    <button class="button-secondary" data-action="reply">Reply</button>
+                    <button class="button-secondary" data-action="forward">Forward</button>
+                 </div>
+            </div>
+
+             <!-- Initial placeholder -->
+            <div id="initial-placeholder" class="empty-view">
+                <p>Select a message to read</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Compose Modal -->
+    <div id="compose-modal-overlay" class="modal-overlay hidden">
+        <div id="compose-modal" class="compose-modal" role="dialog" aria-labelledby="compose-modal-title" aria-modal="true">
+            <header class="modal-header">
+                <h2 id="compose-modal-title" class="modal-title">New Message</h2>
+                <button id="compose-close-btn" class="icon-button" aria-label="Close compose window">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4148L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path></svg>
+                </button>
+            </header>
+            <form id="compose-form" class="compose-form">
+                <div class="form-group">
+                    <label for="compose-to">To</label>
+                    <input type="email" id="compose-to" required>
+                    <div class="cc-bcc-toggles">
+                        <button type="button" id="toggle-cc" class="link-button">Cc</button>
+                        <button type="button" id="toggle-bcc" class="link-button">Bcc</button>
+                    </div>
+                </div>
+                <div class="form-group hidden" id="cc-group">
+                    <label for="compose-cc">Cc</label>
+                    <input type="email" id="compose-cc">
+                </div>
+                <div class="form-group hidden" id="bcc-group">
+                    <label for="compose-bcc">Bcc</label>
+                    <input type="email" id="compose-bcc">
+                </div>
+                <div class="form-group">
+                    <label for="compose-subject">Subject</label>
+                    <input type="text" id="compose-subject">
+                </div>
+                <div class="form-group">
+                    <div id="compose-toolbar" class="compose-toolbar">
+                        <button type="button" class="icon-button" data-command="bold" aria-label="Bold"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 11H12.5C13.8807 11 15 12.1193 15 13.5C15 14.8807 13.8807 16 12.5 16H8V11ZM10 13V14H12.5C12.9404 14 13.3333 13.7067 13.3333 13.25C13.3333 12.7933 12.9404 12.5 12.5 12.5H10V13ZM6 4H14.5C16.9853 4 19 6.01472 19 8.5C19 10.9853 16.9853 13 14.5 13H10V18H8V20H6V4Z"></path></svg></button>
+                        <button type="button" class="icon-button" data-command="italic" aria-label="Italic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4V6H12.21L8.79 18H6V20H14V18H11.79L15.21 6H18V4H10Z"></path></svg></button>
+                        <button type="button" class="icon-button" data-command="underline" aria-label="Underline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 3V11C8 13.2091 9.79086 15 12 15C14.2091 15 16 13.2091 16 11V3H18V11C18 14.3137 15.3137 17 12 17C8.68629 17 6 14.3137 6 11V3H8ZM4 19H20V21H4V19Z"></path></svg></button>
+                    </div>
+                    <div id="compose-body" class="compose-body" contenteditable="true" role="textbox" aria-multiline="true"></div>
+                </div>
+                <div id="compose-attachments" class="compose-attachments"></div>
+            </form>
+            <footer class="modal-footer">
+                <button id="compose-send-btn" class="button-primary">Send</button>
+                <div class="footer-actions">
+                     <label for="attach-file-input" class="icon-button" aria-label="Attach file">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.8284 10.7071L13.4142 12.1213L10.2426 8.94975C9.07107 7.77817 7.12132 7.77817 5.94975 8.94975C4.77817 10.1213 4.77817 12.0711 5.94975 13.2426L12.7175 20.0104C13.6933 20.9862 15.275 20.9862 16.2508 20.0104C17.2266 19.0346 17.2266 17.4529 16.2508 16.4772L10.5858 10.8122C10.2929 10.5193 9.80211 10.5193 9.50921 10.8122C9.21632 11.1051 9.21632 11.5959 9.50921 11.8888L14.1213 16.5009L15.5355 15.0867L10.9233 10.4745C11.5091 9.88876 12.4589 9.88876 13.0447 10.4745L18.7096 16.1394C20.2713 17.7011 20.2713 20.1989 18.7096 21.7606C17.148 23.3223 14.6502 23.3223 13.0885 21.7606L6.32075 15.002C4.15938 12.8406 4.15938 9.31959 6.32075 7.15822C8.48212 4.99685 11.9926 4.99685 14.154 7.15822L18.7322 11.7364L17.318 13.1506L14.8284 10.7071Z"></path></svg>
+                     </label>
+                     <input type="file" id="attach-file-input" hidden multiple>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
