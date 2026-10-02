@@ -1,1 +1,90 @@
-Gmail Clone (Vanilla JS SPA)This project is a high-fidelity, front-end clone of the Gmail web application, built entirely with vanilla HTML, CSS, and JavaScript. It serves as a demonstration of building a modern, responsive, and accessible single-page application (SPA) without relying on any external frameworks or libraries.✨ FeaturesResponsive Design: A seamless experience on both desktop (two-column) and mobile (single-column) devices.Mailbox Navigation: View messages in standard folders like Inbox, Sent, Archive, and Trash.Custom Labels: Organize emails with custom labels, complete with message counts.Threaded Conversation View: Click any message to see the full conversation history in a clean, chronological layout.Compose Modal: A fully functional compose window with To, Cc/Bcc fields, a basic rich-text editor, and mock attachment support.Real-time Search: Instantly filter messages by sender, subject, or body content.Bulk Actions: Select multiple messages to perform actions like Archive, Delete, Mark as Read/Unread.Core Email Actions: Star messages, mark as read/unread, and manage selections with checkboxes.Keyboard Shortcuts: Boost productivity with keyboard controls for common actions.Accessibility: Built with semantic HTML and ARIA attributes for screen reader compatibility and keyboard navigation.🛠 Tech StackHTML5: Semantic structure for content and accessibility.CSS3: Custom properties (variables), Flexbox, and Grid for a modern, responsive layout.Vanilla JavaScript (ES6+): All application logic, state management, and DOM manipulation are handled with plain JavaScript. No frameworks, no libraries, no build tools.🚀 How to Run LocallyDownload Files: Make sure you have index.html, styles.css, and app.js from the project.Create a Folder: Create a new folder on your computer (e.g., gmail-clone).Place Files: Put all three files (index.html, styles.css, app.js) inside this folder.Open in Browser: Open the index.html file in any modern web browser (like Chrome, Firefox, or Edge). The application will run instantly.🏛 Architecture & DesignThis project follows a simple, state-driven architecture inspired by modern front-end frameworks:Centralized State: A single state object in app.js holds the entire application's current status (e.g., active folder, selected message). This makes the app predictable.Render Functions: The UI is a direct function of the state (UI = f(state)). Functions like renderMessageList() are called to sync the DOM with the current state.Event Delegation: A single event listener is used on parent containers to efficiently handle clicks on dynamic child elements (like individual messages), improving performance.Separation of Concerns: HTML is for structure, CSS is for styling, and JS is for logic, ensuring the codebase is clean and maintainable.⌨️ Keyboard Shortcutsc: Opens the Compose New Message modal.Escape:Closes the compose modal if it's open.Navigates back from the thread view to the message list.
+# Gmail Clone (Vanilla JS SPA)
+
+A high-fidelity, front-end clone of the Gmail web application, built entirely
+with vanilla HTML, CSS, and JavaScript — no frameworks, no libraries, no build
+tools. A demonstration of building a modern, responsive, accessible
+single-page application (SPA) with plain web technology.
+
+**Live demo:** https://girishlade111.github.io/Gmail-Clone-UI-Structure/
+
+## ✨ Features
+
+- **Responsive design** — seamless experience on desktop (two-column) and
+  mobile (single-column) devices
+- **Mailbox navigation** — Inbox, Sent, Archive, Trash, plus custom labels
+- **Threaded conversation view** — click any message to see the full
+  conversation history in a clean, chronological layout
+- **Compose modal** — To / Cc / Bcc fields, basic rich-text editor, mock
+  attachment support
+- **Real-time search** — instantly filter messages by sender, subject, or body
+- **Bulk actions** — select multiple messages to archive, delete, or
+  mark as read/unread
+- **Core email actions** — star messages, mark read/unread, checkbox selection
+- **Keyboard shortcuts** — `c` opens compose, `Escape` closes the modal,
+  and more
+- **Accessibility** — semantic HTML and ARIA attributes for screen reader
+  compatibility and keyboard navigation
+
+## 🛠 Tech Stack
+
+| Layer  | Technology |
+|--------|-----------|
+| Structure | HTML5 (semantic, accessible markup) |
+| Styling | CSS3 — custom properties, Flexbox, Grid |
+| Logic | Vanilla JavaScript (ES6+) — centralized state, render functions, event delegation |
+| Build | None — static files, served as-is |
+| Deploy | GitHub Pages |
+
+## 🚀 Quick Start
+
+No build step required. Serve the static files:
+
+```bash
+# Option 1: open directly in a browser
+open index.html
+
+# Option 2: serve locally (avoids file:// quirks)
+python3 -m http.server 8000
+# then visit http://localhost:8000
+```
+
+## 📁 Project Structure
+
+```text
+Gmail-Clone-UI-Structure/
+├── index.html          # App shell (also shipped as "Gmail Clone UI Structure")
+├── styles.css          # Full UI styling (also shipped as "Gmail Clone Styles")
+├── app.js              # Application logic & state (also shipped as
+│                       # "Gmail Clone Application Logic")
+└── README.md
+```
+
+The original three deliverables (`Gmail Clone UI Structure`, `Gmail Clone
+Styles`, `Gmail Clone Application Logic`) are kept as-is for reference; the
+deployment-ready copies are `index.html`, `styles.css`, and `app.js`.
+
+## 🏛 Architecture
+
+- **Centralized state** — a single state object in `app.js` holds the entire
+  application status (active folder, selected message, etc.)
+- **Render functions** — the UI is a direct function of the state
+  (`UI = f(state)`); renderers like `renderMessageList()` sync the DOM
+- **Event delegation** — single listeners on parent containers handle dynamic
+  child elements efficiently
+- **Separation of concerns** — HTML for structure, CSS for styling, JS for
+  logic
+
+## 🌐 Deploy
+
+Static hosting only — drop the three files on any static host:
+
+- **GitHub Pages:** Settings → Pages → Deploy from branch → `main` / `/ (root)`
+- **Netlify / Cloudflare Pages:** drag-and-drop the folder, no build command
+
+## 📄 License
+
+Free to use and learn from.
+
+---
+
+**Built by Girish Lade** — [ladestack.in](https://ladestack.in)
